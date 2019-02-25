@@ -17,7 +17,7 @@ router.get('/test',(req,res) => res.json({msg: "Users works"}));
 //@desc Register user
 //@access Public
 router.post('/register', (req, res) => {
-    const {errors, isValid } = ValidateRegisterInput(req.body);
+    const {errors, isValid } = validateRegisterInput(req.body);
     //check validation
     if (!isValid){
         return res.status(400).json(errors);
@@ -40,7 +40,7 @@ router.post('/register', (req, res) => {
                 password : req.body.password
             });
             bcrypt.genSalt(10, (err,salt) =>{
-                bcrypt.hase(newUser.password, salt, (err,hash)=>{
+                bcrypt.hash(newUser.password, salt, (err,hash)=>{
                     if (err)
                         throw err;
                     newUser.password = hash;
@@ -69,13 +69,14 @@ router.post('/login', (req, res) => {
     User.findOne({email}).then(user => {
         //check for user
         if (!user){
+            errors.email = 'User not found';
             return res.status(404).json({errors});
         }
         //chech password
         bcrypt.compare(password, user.password).then(isMatch => {
                 if (isMatch){
                     //user matched
-                    const payload = {id: user.id, name : user.name, avatar: user.avatar}
+                    const payload = {id: user.id, name : user.name, avatar: user.avatar} //create JWT payload
                     //sign token
                     jwt.sign(
                         payload, keys.secretOrKey, {expiresIn: 3600}, (err, token)=> {
