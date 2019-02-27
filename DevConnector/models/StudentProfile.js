@@ -7,12 +7,12 @@ const Schema = mongoose.Schema;
 //const WorkerProfile = mongoose.model('');
 // Create Schema
 //Done by Zhou
-const User = mongoose.model('User', UserSchema);
+const student = mongoose.model('Student', StudentSchema);
 
 const StudentProfileSchema = new Schema({
 	user: {
 		type: Schema.Types.ObjectId,
-		ref: 'User'
+		ref: 'student'
 	},
 	name:{
 		type: String,

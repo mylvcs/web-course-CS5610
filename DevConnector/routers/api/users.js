@@ -4,6 +4,8 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt= require('jsonwebtoken');
 const passport= require('passport');
+const keys = require('../../config/keys');
+
 
 //Load input validation
 const WorkerRegister = require('../../validation/workerRegister');
@@ -115,11 +117,11 @@ router.post('/login', (req, res) => {
             errors.email = 'User not found';
             return res.status(404).json({errors});
         }
-        //chech password
+        //check password
         bcrypt.compare(password, user.password).then(isMatch => {
                 if (isMatch){
                     //user matched
-                    const payload = {id: user.id, name : user.name, avatar: user.avatar} //create JWT payload
+                   const payload = {id: user.id, name : user.name, avatar: user.avatar} //create JWT payload
                     //sign token
                     jwt.sign(
                         payload, keys.secretOrKey, {expiresIn: 3600}, (err, token)=> {

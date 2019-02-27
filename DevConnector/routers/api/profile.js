@@ -87,24 +87,15 @@ router.post('/',
     passport.authenticate('jwt', {session : false}),
         (req, res) => {
             const profileFields = {};
-            profileFields.user = req.user.id;
+            profileFields.user = req.user.id; 
             if(req.body.handle)  profileFields.handle = req.body.handle;
             if(req.body.company)  profileFields.company = req.body.company;
-            if(req.body.website)  profileFields.website = req.body.website;
+            if(req.body.jobTitle)  profileFields.jobTitle = req.body.jobTitle;
             if(req.body.location)  profileFields.location = req.body.location;
             //TODO
-            if (typeof req.body.skills !== 'undefined'){
-                profileFields.skills = req.body.skills.split(',');
-            }
-            profileFields.social = {};
-
-            if(req.body.youtube)  profileFields.youtube = req.body.youtube;
-            if(req.body.twitter)  profileFields.twitter = req.body.twitter;
-            if(req.body.facebook)  profileFields.facebook = req.body.facebook;
-            if(req.body.linkedin)  profileFields.linkedin = req.body.linkedin;
-            //TODO
-            //if(req.body.github)  profileFields.github = req.body.github;
-            if(req.body.instagram)  profileFields.instagram = req.body.instagram;
+            if (req.body.Date) profileFields.Date = req.body.Date;
+            if (req.body.details) profileFields.details = req.body.details;
+            if (req.body.youxiaoqi) profileFields.youxiaoqi = req.body.youxiaoqi;
 
             Profile.findOne({ user : req.user.id}).then(profile => {
                 if (profile){
@@ -115,8 +106,9 @@ router.post('/',
                     ).then ( profile => res.json(profile));
                 }else {
                     //Create
+                    
 
-                    //check if handle exists ??? what is handle ??
+                    //check if handle exists
                     Profile.findOne({handle: profileFields.handle}).then(profile => {
                         if (profile){
                             errors.handle= 'That handle exists';
