@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
+//mongoose.connect("mongodb://localhost:27017/web-referral-app");
 const Schema = mongoose.Schema;
 
+//all user common 
+//用户名
 const UserSchema = new Schema({
     name : {
         type: String,
@@ -16,7 +19,11 @@ const UserSchema = new Schema({
     },
     avatar:{
         type: String,
-        required: true
+        required: false
+    },
+    studentOrNot : {
+        type: Boolean,
+        default : false
     },
     date :{
         type : Date, 

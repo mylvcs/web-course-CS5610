@@ -1,16 +1,16 @@
 const mongoose = require ('mongoose');
 const Schema = mongoose.Schema;
-
+//the post refers the referral posted by workers or the asked referrals posted by students
 const PostSchema = new Schema({
-    user : {
+    poster : {
         type : Schema.Types.ObjectId,
-        ref: 'users'
+        ref: 'User'
     },
     text : {
         type : String,
         required: true
     },
-    name :{
+    title :{
         type : String
     },
     avatar: {

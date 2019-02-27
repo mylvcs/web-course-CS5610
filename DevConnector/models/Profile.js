@@ -1,6 +1,8 @@
 const mongoose = require ('mongoose');
 const Schema = mongoose.Schema;
-
+//Profile可以理解为每一个post的详情
+//比如Worker edit 的profile 内容有 内推人的邮箱 内推公司以及一些 具体要求
+//TODO
 const ProfileSchema = new Schema({
     user : {
         type : Schema.Types.ObjectId,
