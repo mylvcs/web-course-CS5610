@@ -2,7 +2,7 @@ const Validator = require('validator');
 const isEmpty =  require('./isEmpty');
 //this is for referral validate Register because "studentOrnot" is set to be false
 
-module.exports = function ValidateRegisterInput(data){
+module.exports = function StudentValidateRegisterInput(data){
     let errors = {};
     data.name = !isEmpty(data.name) ? data.name : '';
     data.email = !isEmpty(data.email) ? data.email : '';

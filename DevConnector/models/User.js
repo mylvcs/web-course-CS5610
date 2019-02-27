@@ -19,7 +19,7 @@ const UserSchema = new Schema({
     },
     avatar:{
         type: String,
-        required: false
+        required: true
     },
     studentOrNot : {
         type: Boolean,

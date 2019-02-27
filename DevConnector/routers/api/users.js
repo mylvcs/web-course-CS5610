@@ -6,7 +6,9 @@ const jwt= require('jsonwebtoken');
 const passport= require('passport');
 
 //Load input validation
-const validateRegisterInput = require('../../validation/register');
+const WorkerRegister = require('../../validation/workerRegister');
+const StudentRegister = require('../../validation/studentRegister');
+
 const validateLoginInput = require('../../validation/login');
 
 const User = require('../../models/User');
@@ -14,10 +16,10 @@ const User = require('../../models/User');
 router.get('/test',(req,res) => res.json({msg: "Users works"}));
 
 //@route POST api/users/register
-//@desc Register user
+//@desc Register worker
 //@access Public
-router.post('/register', (req, res) => {
-    const {errors, isValid } = validateRegisterInput(req.body);
+router.post('/workerregister', (req, res) => {
+    const {errors, isValid } = WorkerRegister(req.body);
     //check validation
     if (!isValid){
         return res.status(400).json(errors);
@@ -34,6 +36,47 @@ router.post('/register', (req, res) => {
             });
             
             const newUser = new User({
+                name : req.body.name,
+                email: req.body.email,
+                avatar,
+                password : req.body.password
+            });
+            bcrypt.genSalt(10, (err,salt) =>{
+                bcrypt.hash(newUser.password, salt, (err,hash)=>{
+                    if (err)
+                        throw err;
+                    newUser.password = hash;
+                    newUser.save().then(user => res.json(user))
+                    .catch(err => console.log(err));
+                })
+            })
+        }
+    });
+});
+
+
+//@route POST api/users/register
+//@desc Student worker
+//@access Public
+router.post('/studentregister', (req, res) => {
+    const {errors, isValid } = StudentRegister(req.body);
+    //check validation
+    if (!isValid){
+        return res.status(400).json(errors);
+    }
+
+    User.findOne({email : req.body.email}).then(user => {
+        if (user) {
+            return res.status(400).json({email: 'Email already exists'});
+        }else {
+            const avatar = gravatar.url(req.body.email, {
+                s: '200',
+                r : 'pg',
+                d : 'mm'
+            });
+            
+            const newUser = new User({
+                studentOrNot : true,
                 name : req.body.name,
                 email: req.body.email,
                 avatar,
