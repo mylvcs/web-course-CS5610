@@ -11,7 +11,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
-  "author": "Brad Traversy",
+  "author": "Mengyun Wang",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -20,6 +20,7 @@
     "express": "^4.16.3",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.2.0",
+    "jwt-decode": "^2.2.0",
     "mongoose": "^5.4.14",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
